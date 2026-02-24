@@ -186,6 +186,11 @@
       justify-content: center;
       min-height: 100vh;
       padding-top: 80px;
+      position: relative;
+    }
+
+    #home .section-inner {
+      max-width: 580px;
     }
 
     .hero-tag {
@@ -210,7 +215,8 @@
 
     .hero-title {
       font-family: var(--display);
-      font-size: clamp(48px, 8vw, 96px);
+      /* FIXED: reduced max size so full name "Athurupana" fits without clipping */
+      font-size: clamp(40px, 5.5vw, 72px);
       font-weight: 800;
       line-height: 1;
       letter-spacing: -2px;
@@ -225,12 +231,16 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      /* FIXED: ensure text wraps and doesn't overflow */
+      word-break: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
     }
 
     .hero-title .role-line {
       display: block;
       color: var(--muted);
-      font-size: clamp(28px, 4vw, 52px);
+      font-size: clamp(24px, 3.5vw, 46px);
       font-weight: 400;
       letter-spacing: -1px;
     }
@@ -340,14 +350,6 @@
       .terminal-float {
         display: none;
       }
-    }
-
-    #home {
-      position: relative;
-    }
-
-    #home .section-inner {
-      max-width: 580px;
     }
 
     .terminal-bar {
