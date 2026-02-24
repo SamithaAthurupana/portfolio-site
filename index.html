@@ -177,6 +177,7 @@
       padding: 120px 2rem 80px;
       max-width: 1100px;
       margin: 0 auto;
+      overflow: visible;
     }
 
     /* === HERO === */
@@ -191,6 +192,8 @@
 
     #home .section-inner {
       max-width: 580px;
+      /* allow name text to be measured without clipping */
+      overflow: visible;
     }
 
     .hero-tag {
@@ -215,10 +218,8 @@
 
     .hero-title {
       font-family: var(--display);
-      /* FIXED: reduced max size so full name "Athurupana" fits without clipping */
-      font-size: clamp(40px, 5.5vw, 72px);
       font-weight: 800;
-      line-height: 1;
+      line-height: 1.05;
       letter-spacing: -2px;
       margin-bottom: 1rem;
       opacity: 0;
@@ -231,18 +232,18 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      /* FIXED: ensure text wraps and doesn't overflow */
-      word-break: break-word;
-      overflow-wrap: break-word;
-      white-space: normal;
+      white-space: nowrap;
+      font-size: 80px;
+      line-height: 1.05;
     }
 
     .hero-title .role-line {
       display: block;
       color: var(--muted);
-      font-size: clamp(24px, 3.5vw, 46px);
+      font-size: clamp(22px, 3.5vw, 42px);
       font-weight: 400;
       letter-spacing: -1px;
+      margin-top: 0.25rem;
     }
 
     .hero-desc {
@@ -1118,7 +1119,8 @@
       <div class="section-inner">
         <div class="hero-tag">Available for opportunities</div>
         <h1 class="hero-title">
-          <span class="name-line">Samitha<br>Athurupana</span>
+          <span class="name-line">Samitha</span>
+          <span class="name-line">Athurupana</span>
           <span class="role-line">Software Engineer</span>
         </h1>
         <p class="hero-desc">
@@ -1487,6 +1489,24 @@
   </footer>
 
   <script>
+    // FitText: shrink name lines to fit their container perfectly
+    function fitNameLines() {
+      const nameLines = document.querySelectorAll('.hero-title .name-line');
+      const container = document.querySelector('#home .section-inner');
+      if (!container) return;
+      const maxWidth = container.clientWidth;
+      nameLines.forEach(el => {
+        let size = 80;
+        el.style.fontSize = size + 'px';
+        while (el.scrollWidth > maxWidth && size > 20) {
+          size -= 1;
+          el.style.fontSize = size + 'px';
+        }
+      });
+    }
+    fitNameLines();
+    window.addEventListener('resize', fitNameLines);
+
     // Glow blob follow
     const blob = document.getElementById('blob');
     document.addEventListener('mousemove', (e) => {
